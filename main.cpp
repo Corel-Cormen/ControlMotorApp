@@ -1,7 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QTimer>
 #include "speedometer.h"
+#include "settingsport.h"
 
 
 int main(int argc, char *argv[])
@@ -13,12 +15,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Speedometer>("com.ulasdikme.speedometer", 1, 0, "Speedometer");
+    SettingsPort settingsPorts;
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("settingsPorts", &settingsPorts);
+
     //const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-    qDebug() << engine.rootObjects();
 
     QObject *object = engine.rootObjects()[0];
     QObject *speedometer = object->findChild<QObject*>("speedoMeter");
@@ -40,8 +43,6 @@ int main(int argc, char *argv[])
             val += 10;
         else
             val -= 10;
-
-        //ptrSpeedometer->setFontSize(20);
 
         ptrSpeedometer->setSpeed(val);
     });

@@ -11,6 +11,15 @@ ApplicationWindow {
     visible: true
     title: qsTr("Settings Port")
 
+    property int sizePorts: settingsPorts.getSizePorts()
+    property variant portName: settingsPorts.getName()
+    property variant description: settingsPorts.getDescription()
+    property variant manufacturer: settingsPorts.getManufacturer()
+    property variant serialNumber: settingsPorts.getSerialNumber()
+    property variant location: settingsPorts.getLocation()
+    property variant vendorIdentifier: settingsPorts.getVendorIdentifier()
+    property variant productIdentifier: settingsPorts.getProductIdentifier()
+
     Frame {
         id: selectPortFrame
         width: parent.width * 0.5
@@ -37,7 +46,8 @@ ApplicationWindow {
             anchors.right: parent.right
             anchors.leftMargin: parent.width * 0.05
             anchors.rightMargin: parent.width * 0.05
-            model: ['a', 'b', 'c', 'd', 'e']
+            model: portName
+
             contentItem: Text {
                 leftPadding: 10
                 text: chosePortBox.displayText
@@ -45,6 +55,18 @@ ApplicationWindow {
                 color: "#fff000"
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
+            }
+
+            Component.onCompleted: fillDataPort(chosePortBox.currentIndex)
+            onActivated: fillDataPort(chosePortBox.currentIndex)
+
+            function fillDataPort(index) {
+                descriptionInfo.text = description[index]
+                manufacturerInfo.text = manufacturer[index]
+                serialNumberInfo.text = serialNumber[index]
+                locationInfo.text = location[index]
+                vendorIdentiferInfo.text = vendorIdentifier[index]
+                productIdentiferInfo.text = productIdentifier[index]
             }
         }
 
@@ -348,6 +370,10 @@ ApplicationWindow {
             radius: 4
         }
         text: qsTr("Apply")
+
+        onClicked: {
+            console.log(portName);
+        }
     }
 }
 

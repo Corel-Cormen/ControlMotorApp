@@ -1,4 +1,4 @@
-QT += quick
+QT += quick serialport
 
 CONFIG += c++11
 
@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+        settingsport.cpp \
         speedometer.cpp
 
 RESOURCES += qml.qrc
@@ -24,6 +25,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    settingsport.h \
     speedometer.h
 
 FORMS += $$PWD
