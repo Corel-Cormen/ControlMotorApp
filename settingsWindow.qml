@@ -349,6 +349,7 @@ ApplicationWindow {
         }
 
         CheckBox {
+            id: localEchoBox
             anchors.top: parent.top
             anchors.left: text9.right
             checked: true
@@ -372,7 +373,10 @@ ApplicationWindow {
         text: qsTr("Apply")
 
         onClicked: {
-            console.log(portName);
+            settingsPorts.setPortProperties(chosePortBox.currentText, baudRateBox.currentText,
+                                            dataBitsBox.currentText, parityBox.currentText,
+                                            stopBitsBox.currentText, flowControlBox.currentValue,
+                                            localEchoBox.checkState)
         }
     }
 }

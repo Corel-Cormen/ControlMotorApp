@@ -37,6 +37,9 @@ public:
 private:
     Port *m_ports;
     int m_sizePorts;
+    int m_chosePort;
+
+    friend QDebug operator<<(QDebug out, const SettingsPort& settingsPort);
 
 public slots:
     int getSizePorts();
@@ -47,6 +50,8 @@ public slots:
     QStringList getLocation();
     QStringList getVendorIdentifier();
     QStringList getProductIdentifier();
+
+    void setPortProperties(QString name, QString baudRate, QString dataBits, QString parity, QString stopBits, QString flowControl, bool localEchoEnabled);
 };
 
 #endif // SETTINGSPORT_H
