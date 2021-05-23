@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "settingsport.h"
+#include "console.h"
 
 class AppCore : public QObject
 {
@@ -15,6 +16,7 @@ public slots:
     void setSPPortProperties(QString name, QString baudRate, QString dataBits,
                              QString parity, QString stopBits, QString flowControl,
                              bool localEchoEnabled);
+    void connectConsole();
 
     int getSPSizePorts();
     QStringList getSPName();
@@ -25,9 +27,13 @@ public slots:
     QStringList getSPVendorIdentifier();
     QStringList getSPProductIdentifier();
 
+    int getChosePort();
+    void setChosePort(int idx);
+
 private:
     SettingsPort m_settingsPort;
-
+    int m_chosePort;
+    Console m_console;
 };
 
 #endif // APPCORE_H

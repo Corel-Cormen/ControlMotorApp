@@ -1,8 +1,10 @@
 #include "appcore.h"
 
-AppCore::AppCore(QObject *parent) : QObject(parent), m_settingsPort()
-{
+#include <QDebug>
 
+AppCore::AppCore(QObject *parent) : QObject(parent), m_settingsPort(), m_console()
+{
+    m_chosePort = -1;
 }
 
 void AppCore::setSPPortProperties(QString name, QString baudRate, QString dataBits,
@@ -10,6 +12,21 @@ void AppCore::setSPPortProperties(QString name, QString baudRate, QString dataBi
                                   bool localEchoEnabled)
 {
     m_settingsPort.setPortProperties(name, baudRate, dataBits, parity, stopBits, flowControl, localEchoEnabled);
+}
+
+void AppCore::connectConsole()
+{
+    m_console.openSerialPort(m_settingsPort.getPort(m_chosePort));
+}
+
+int AppCore::getChosePort()
+{
+    return m_chosePort;
+}
+
+void AppCore::setChosePort(int idx)
+{
+    m_chosePort = idx;
 }
 
 int AppCore::getSPSizePorts()

@@ -377,6 +377,8 @@ ApplicationWindow {
                                         dataBitsBox.currentText, parityBox.currentText,
                                         stopBitsBox.currentText, flowControlBox.currentValue,
                                         localEchoBox.checkState)
+            appcore.setChosePort(chosePortBox.currentIndex)
+            console.log(chosePortBox.currentIndex)
             root.close()
         }
     }

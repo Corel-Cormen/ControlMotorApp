@@ -60,6 +60,12 @@ void SettingsPort::setPortProperties(QString name, QString baudRate, QString dat
     qDebug() << m_ports[idx].flowControl;
 }
 
+Port& SettingsPort::getPort(int idx)
+{
+    if(idx >= m_sizePorts || idx < 0)
+        throw std::out_of_range("index out_of_range of Ports");
+    return m_ports[idx];
+}
 
 int SettingsPort::getSizePorts()
 {

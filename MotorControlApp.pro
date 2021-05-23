@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         appcore.cpp \
+        console.cpp \
         main.cpp \
         settingsport.cpp \
         speedometer.cpp
@@ -27,6 +28,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     appcore.h \
+    console.h \
     settingsport.h \
     speedometer.h
 

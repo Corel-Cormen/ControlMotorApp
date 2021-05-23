@@ -65,6 +65,10 @@ ApplicationWindow {
             icon.color: "transparent"
             icon.width: settingsButton.width
             icon.height: settingsButton.height
+
+            onClicked: {
+                appcore.connectConsole()
+            }
         }
 
         Button {

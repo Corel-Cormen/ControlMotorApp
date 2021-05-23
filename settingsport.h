@@ -45,6 +45,7 @@ public:
     void setPortProperties(QString name, QString baudRate, QString dataBits,
                            QString parity, QString stopBits, QString flowControl,
                            bool localEchoEnabled);
+    Port& getPort(int idx);
 
 private:
     Port *m_ports;
