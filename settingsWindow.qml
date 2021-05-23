@@ -11,14 +11,14 @@ ApplicationWindow {
     visible: true
     title: qsTr("Settings Port")
 
-    property int sizePorts: settingsPorts.getSizePorts()
-    property variant portName: settingsPorts.getName()
-    property variant description: settingsPorts.getDescription()
-    property variant manufacturer: settingsPorts.getManufacturer()
-    property variant serialNumber: settingsPorts.getSerialNumber()
-    property variant location: settingsPorts.getLocation()
-    property variant vendorIdentifier: settingsPorts.getVendorIdentifier()
-    property variant productIdentifier: settingsPorts.getProductIdentifier()
+    property int sizePorts: appcore.getSPSizePorts()
+    property variant portName: appcore.getSPName()
+    property variant description: appcore.getSPDescription()
+    property variant manufacturer: appcore.getSPManufacturer()
+    property variant serialNumber: appcore.getSPSerialNumber()
+    property variant location: appcore.getSPLocation()
+    property variant vendorIdentifier: appcore.getSPVendorIdentifier()
+    property variant productIdentifier: appcore.getSPProductIdentifier()
 
     Frame {
         id: selectPortFrame
@@ -373,10 +373,11 @@ ApplicationWindow {
         text: qsTr("Apply")
 
         onClicked: {
-            settingsPorts.setPortProperties(chosePortBox.currentText, baudRateBox.currentText,
-                                            dataBitsBox.currentText, parityBox.currentText,
-                                            stopBitsBox.currentText, flowControlBox.currentValue,
-                                            localEchoBox.checkState)
+            appcore.setSPPortProperties(chosePortBox.currentText, baudRateBox.currentText,
+                                        dataBitsBox.currentText, parityBox.currentText,
+                                        stopBitsBox.currentText, flowControlBox.currentValue,
+                                        localEchoBox.checkState)
+            root.close()
         }
     }
 }

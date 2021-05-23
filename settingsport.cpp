@@ -7,9 +7,8 @@ QSerialPort::Parity checkPartity(QString partity);
 QSerialPort::StopBits checkStopBits(QString stopBits);
 QSerialPort::FlowControl checkFlowControl(QString flowControl);
 
-SettingsPort::SettingsPort(QObject *parent) : QObject(parent)
+SettingsPort::SettingsPort()
 {
-    qDebug() << *this;
     QList<QSerialPortInfo> portsAvailble = QSerialPortInfo::availablePorts();
     m_sizePorts = portsAvailble.size();
     m_ports = new Port[m_sizePorts];
@@ -40,7 +39,7 @@ void SettingsPort::setPortProperties(QString name, QString baudRate, QString dat
             break;
     }
 
-    qDebug() << idx << " " << m_ports[idx].name;
+    qDebug() << idx << m_ports[idx].name;
 
     m_ports[idx].stringBaudRate = baudRate;
     m_ports[idx].baudRate = baudRate.toInt();
@@ -53,7 +52,12 @@ void SettingsPort::setPortProperties(QString name, QString baudRate, QString dat
     m_ports[idx].flowControl = checkFlowControl(flowControl);
     m_ports[idx].stringFlowControl = flowControl;
     m_ports[idx].localEchoEnabled = localEchoEnabled;
-    m_chosePort = idx;
+
+    qDebug() << m_ports[idx].baudRate;
+    qDebug() << m_ports[idx].dataBits;
+    qDebug() << m_ports[idx].parity;
+    qDebug() << m_ports[idx].stopBits;
+    qDebug() << m_ports[idx].flowControl;
 }
 
 

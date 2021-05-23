@@ -1,8 +1,6 @@
 #ifndef SETTINGSPORT_H
 #define SETTINGSPORT_H
 
-#include <QObject>
-
 #include <QSerialPort>
 
 struct Port {
@@ -26,22 +24,15 @@ struct Port {
     quint16 productIdentifier;
 };
 
-class SettingsPort : public QObject
+class SettingsPort
 {
-    Q_OBJECT
 
 public:
-    SettingsPort(QObject *parent = nullptr);
+    SettingsPort();
     ~SettingsPort();
-
-private:
-    Port *m_ports;
-    int m_sizePorts;
-    int m_chosePort;
 
     friend QDebug operator<<(QDebug out, const SettingsPort& settingsPort);
 
-public slots:
     int getSizePorts();
     QStringList getName();
     QStringList getDescription();
@@ -51,7 +42,14 @@ public slots:
     QStringList getVendorIdentifier();
     QStringList getProductIdentifier();
 
-    void setPortProperties(QString name, QString baudRate, QString dataBits, QString parity, QString stopBits, QString flowControl, bool localEchoEnabled);
+    void setPortProperties(QString name, QString baudRate, QString dataBits,
+                           QString parity, QString stopBits, QString flowControl,
+                           bool localEchoEnabled);
+
+private:
+    Port *m_ports;
+    int m_sizePorts;
+
 };
 
 #endif // SETTINGSPORT_H

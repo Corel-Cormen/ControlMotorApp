@@ -3,8 +3,7 @@
 #include <QQmlContext>
 #include <QTimer>
 #include "speedometer.h"
-#include "settingsport.h"
-
+#include "appcore.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,10 +14,12 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Speedometer>("com.ulasdikme.speedometer", 1, 0, "Speedometer");
-    SettingsPort settingsPorts;
+    //SettingsPort settingsPorts;
+    AppCore appCore;
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("settingsPorts", &settingsPorts);
+    //engine.rootContext()->setContextProperty("settingsPorts", &settingsPorts);
+    engine.rootContext()->setContextProperty("appcore", &appCore);
 
     //const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
