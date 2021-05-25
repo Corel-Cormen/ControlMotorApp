@@ -13,6 +13,9 @@ ApplicationWindow {
     title: qsTr("ControlMotorApp")
 
     property bool runMotor: false
+    property int maxPosition: 100
+    property int minPosition: -100
+    property int maxSpeed: 50
 
     Row {
         id: upFrame
@@ -126,7 +129,7 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
             background: Rectangle {
                 radius: startMotorButton.radius
-                color: runMotor ? "red" : "green"
+                color: runMotor ? "#cf3732" : "#29c910"
                 border.color: "#ff7e00"
                 border.width: 10
             }
@@ -135,6 +138,31 @@ ApplicationWindow {
             font.pointSize: 20
             onClicked: function() {
                 runMotor = !runMotor
+            }
+        }
+
+        SpinBox {
+            id: speedSpinBox
+            anchors.top: parent.top
+            anchors.right: parent.right
+            editable: true
+            from: 0
+            to: maxSpeed
+            value: 0
+
+            Button {
+                id: sendSpeedButton
+                anchors.top: parent.bottom
+                anchors.left: parent.left
+                width: parent.width
+                height: parent.height
+                background: Rectangle {
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
+                    color: sendSpeedButton.down ? "#ffff00" : "#ff7e00"
+                    radius: 4
+                }
+                text: qsTr("Set Speed")
             }
         }
     }
@@ -146,27 +174,113 @@ ApplicationWindow {
         width: parent.width
         height: parent.height * 0.2
 
-        Slider{
-                anchors.centerIn: parent
-                id: sliderId
-                from: 0;
-                to: 1000;
-                value: 500;
-                width: 440;
-                height: 15;
-                background: Rectangle{
-                    implicitHeight: 4
-                    height: parent.height
-                    gradient: Gradient{
-                        orientation: Gradient.Horizontal
-                        GradientStop{id: grad1; position: 0.0; color:"#cf3732"}
-                        GradientStop{position: 0.25; color:"#e3d430"}
-                        GradientStop{position: 0.5; color:"#29c910"}
-                        GradientStop{position: 0.75; color:"#e3d430"}
-                        GradientStop{position: 1.0; color:"#cf3732"}
-                    }
+        Slider {
+            id: motorPositionSlider
+            anchors.centerIn: parent.left
+            anchors.top: parent.top
+            anchors.topMargin: parent.height / 2 - height
+            from: minPosition;
+            to: maxPosition;
+            value: 0;
+            width: parent.width * 0.7;
+            height: 15;
+            background: Rectangle{
+                implicitHeight: 4
+                height: parent.height
+                gradient: Gradient{
+                    orientation: Gradient.Horizontal
+                    GradientStop{ position: 0.0; color: "#cf3732" }
+                    GradientStop{ position: 0.1; color: "#e3d430" }
+                    GradientStop{ position: 0.5; color: "#29c910" }
+                    GradientStop{ position: 0.9; color: "#e3d430" }
+                    GradientStop{ position: 1.0; color: "#cf3732" }
                 }
             }
+
+            onValueChanged: function() {
+                positionSpinBox.value = motorPositionSlider.value
+            }
+
+            Rectangle {
+                id: slider0
+                anchors.centerIn: parent
+                width: 1
+                height: parent.height * 2
+                color: "#ff7e00"
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.top: parent.bottom
+                    anchors.leftMargin: -4
+                    anchors.topMargin: 5
+                    text: qsTr("0")
+                    color: "#ff7e00"
+                    font.pointSize: 12
+                }
+            }
+            Rectangle {
+                anchors.left: parent.left
+                anchors.top: slider0.top
+                width: 1
+                height: parent.height * 2
+                color: "#ff7e00"
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.top: parent.bottom
+                    anchors.leftMargin: -15
+                    anchors.topMargin: 5
+                    text: qsTr("-100")
+                    color: "#ff7e00"
+                    font.pointSize: 12
+                }
+            }
+            Rectangle {
+                anchors.right: parent.right
+                anchors.top: slider0.top
+                width: 1
+                height: parent.height * 2
+                color: "#ff7e00"
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.top: parent.bottom
+                    anchors.leftMargin: -15
+                    anchors.topMargin: 5
+                    text: qsTr("100")
+                    color: "#ff7e00"
+                    font.pointSize: 12
+                }
+            }
+        }
+
+        SpinBox {
+            id: positionSpinBox
+            anchors.top: parent.top
+            anchors.right: parent.right
+            editable: true
+            from: minPosition
+            to: maxPosition
+            value: 0
+            onValueChanged: function() {
+                motorPositionSlider.value = positionSpinBox.value
+            }
+
+            Button {
+                id: sendPositinButton
+                anchors.top: parent.bottom
+                anchors.left: parent.left
+                width: parent.width
+                height: parent.height
+                background: Rectangle {
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
+                    color: sendPositinButton.down ? "#ffff00" : "#ff7e00"
+                    radius: 4
+                }
+                text: qsTr("Set Position")
+            }
+        }
     }
 
     Frame {
