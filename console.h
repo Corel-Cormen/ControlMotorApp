@@ -13,6 +13,8 @@ public:
     void openSerialPort(const Port &settingsPort);
     void closeSerialPort();
 
+    void sendCommand(QString command);
+
 private:
     QSerialPort *m_console = nullptr;
 };

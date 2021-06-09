@@ -17,6 +17,8 @@ public slots:
                              QString parity, QString stopBits, QString flowControl,
                              bool localEchoEnabled);
     void connectConsole();
+    void disconnectConsole();
+    void sendCommand(QString command);
 
     int getSPSizePorts();
     QStringList getSPName();

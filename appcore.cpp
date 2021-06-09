@@ -19,6 +19,16 @@ void AppCore::connectConsole()
     m_console.openSerialPort(m_settingsPort.getPort(m_chosePort));
 }
 
+void AppCore::disconnectConsole()
+{
+    m_console.closeSerialPort();
+}
+
+void AppCore::sendCommand(QString command)
+{
+    m_console.sendCommand(command);
+}
+
 int AppCore::getChosePort()
 {
     return m_chosePort;

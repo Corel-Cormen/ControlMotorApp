@@ -4,6 +4,7 @@ import QtQuick.Window 2.15
 import com.ulasdikme.speedometer 1.0
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
     id: root
@@ -70,7 +71,11 @@ ApplicationWindow {
             icon.height: settingsButton.height
 
             onClicked: {
-                appcore.connectConsole()
+                try {
+                    appcore.connectConsole()
+                } catch(error) {
+                    console.log("error")
+                }
             }
         }
 
@@ -93,6 +98,10 @@ ApplicationWindow {
             icon.color: "transparent"
             icon.width: settingsButton.width
             icon.height: settingsButton.height
+
+            onClicked: {
+                appcore.disconnectConsole()
+            }
         }
     }
 
@@ -136,8 +145,13 @@ ApplicationWindow {
             text: runMotor ? qsTr("STOP") : qsTr("START")
             font.family: "Courier"
             font.pointSize: 20
+
             onClicked: function() {
                 runMotor = !runMotor
+                if(runMotor)
+                    consoleText.text += "MOTOR START\n"
+                else
+                    consoleText.text += "MOTOR STOP\n"
             }
         }
 
@@ -163,6 +177,10 @@ ApplicationWindow {
                     radius: 4
                 }
                 text: qsTr("Set Speed")
+
+                onClicked: {
+                    appcore.sendCommand("POSX=" + positionSpinBox.value.toString())
+                }
             }
         }
     }
@@ -279,6 +297,11 @@ ApplicationWindow {
                     radius: 4
                 }
                 text: qsTr("Set Position")
+
+                onClicked: {
+                    //appcore.sendRunToPossition(positionSpinBox.value)
+                    appcore.sendCommand("\nPOSX=" + motorPositionSlider.value)
+                }
             }
         }
     }
@@ -289,5 +312,23 @@ ApplicationWindow {
         anchors.left: parent.left
         width: parent.width
         height: parent.height * 0.3
+
+        ScrollView {
+            id: scrollConsole
+            //ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            //ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            ScrollBar.vertical.position: scrollPosition
+
+            anchors.fill: parent
+            background: Rectangle {
+                color: "black"
+            }
+            FontLoader { id: machineFont; source: "/fonts/BNMachine.ttf" }
+            font.family: machineFont.name
+            TextArea {
+                id: consoleText
+                padding: 10
+            }
+        }
     }
 }
