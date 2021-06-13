@@ -30,24 +30,24 @@ int main(int argc, char *argv[])
 
     qreal val = 0;
     ptrSpeedometer->setSpeed(val);
-    QTimer timer1;
+//    QTimer timer1;
 
-    bool direction;
-    QObject::connect(&timer1, &QTimer::timeout, [&]()
-    {
-        if(val == ptrSpeedometer->getHighestRange())
-            direction = false;
-        else if(val <= 0.1)
-            direction = true;
+//    bool direction;
+//    QObject::connect(&timer1, &QTimer::timeout, [&]()
+//    {
+//        if(val == ptrSpeedometer->getHighestRange())
+//            direction = false;
+//        else if(val <= 0.1)
+//            direction = true;
 
-        if(direction)
-            val += 10;
-        else
-            val -= 10;
+//        if(direction)
+//            val += 10;
+//        else
+//            val -= 10;
 
-        ptrSpeedometer->setSpeed(val);
-    });
-    timer1.start(100);
+//        ptrSpeedometer->setSpeed(val);
+//    });
+//    timer1.start(100);
 
     if(engine.rootObjects().isEmpty())
         return -1;

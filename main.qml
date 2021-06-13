@@ -13,10 +13,10 @@ ApplicationWindow {
     visible: true
     title: qsTr("ControlMotorApp")
 
-    property bool runMotor: false
+    property bool runMotor: true
     property int maxPosition: 100
     property int minPosition: -100
-    property int maxSpeed: 50
+    property int maxSpeed: 150
 
     Row {
         id: upFrame
@@ -113,6 +113,7 @@ ApplicationWindow {
         height: parent.height * 0.4
 
         Speedometer {
+            id: speedometer
             objectName: "speedoMeter"
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width / 3
@@ -148,10 +149,14 @@ ApplicationWindow {
 
             onClicked: function() {
                 runMotor = !runMotor
-                if(runMotor)
+                if(runMotor) {
+                    appcore.sendCommand("RUN=1")
                     consoleText.text += "MOTOR START\n"
-                else
+                }
+                else {
+                    appcore.sendCommand("RUN=0")
                     consoleText.text += "MOTOR STOP\n"
+                }
             }
         }
 
@@ -179,7 +184,9 @@ ApplicationWindow {
                 text: qsTr("Set Speed")
 
                 onClicked: {
-                    appcore.sendCommand("POSX=" + positionSpinBox.value.toString())
+                    appcore.sendCommand("SPEED=" + speedSpinBox.value.toString())
+                    consoleText.text += "SPEED=" + speedSpinBox.value + "\n";
+                    speedometer.speed = speedSpinBox.value
                 }
             }
         }
@@ -299,8 +306,8 @@ ApplicationWindow {
                 text: qsTr("Set Position")
 
                 onClicked: {
-                    //appcore.sendRunToPossition(positionSpinBox.value)
                     appcore.sendCommand("\nPOSX=" + motorPositionSlider.value)
+                    consoleText.text += "POSX=" + motorPositionSlider.value + "\n";
                 }
             }
         }
